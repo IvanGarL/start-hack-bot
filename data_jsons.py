@@ -2,18 +2,7 @@
 start_text = "Welcome to HomeFocus :wave: Ready to get focused? Simply choose a feature " + \
 				"that might help you focus. :raised_hands:"
 
-recommendations = [
-		{
-			"type": "section",
-			"text": {
-				"type": "plain_text",
-				"text": start_text
-			},
-
-			"accessory": {
-				"type": "checkboxes",
-				"action_id": "this_is_an_action_id",
-				"options": [
+recommendations_options = [
 					{
 						"value": "v_music",
 						"text": {
@@ -43,6 +32,19 @@ recommendations = [
 						}
 					}
 				]
+
+recommendations = [
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": start_text
+			},
+
+			"accessory": {
+				"type": "checkboxes",
+				"action_id": "this_is_an_action_id",
+				"options": recommendations_options
 			}
 		}
 	]

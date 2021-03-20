@@ -11,6 +11,7 @@ from slack_sdk.web import SlackResponse
 import time
 import re
 from data_jsons import recommendations
+from client_preferences import ClientPreferences
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(
@@ -18,13 +19,15 @@ slack_event_adapter = SlackEventAdapter(
 
 client = WebClient(token=os.environ['SLACK_OAUTH_ACCESS_TOKEN'])
 BOT_ID = client.api_call("auth.test")['user_id']
+client_preferences = ClientPreferences()
+
 
 @app.route('/slack/interactions', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        print(request.data)
         print(request.values)
+        client_preferences.update_recommendations_options(request.form['payload'])
     return  ('', 204)
 
 class SlackServer(object):
