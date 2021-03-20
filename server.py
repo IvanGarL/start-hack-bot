@@ -10,7 +10,7 @@ from slack_sdk.errors import SlackApiError
 from slack_sdk.web import SlackResponse
 import time
 import re
-from data_jsons import recommendations
+from data_jsons import recommendations, recommendation_buttons
 from client_preferences import ClientPreferences
 
 app = Flask(__name__)
@@ -27,15 +27,20 @@ def login():
     error = None
     if request.method == 'POST':
         print(request.values)
-        client_preferences.update_recommendations_options(request.form['payload'])
-    return  ('', 204)
+        client_preferences.update_recommendations_options(
+            request.form['payload'])
+    if request.method == 'GET':
+        print('GET')
+    return ('', 204)
+    
 
 class SlackServer(object):
     def __init__(self, token=None):
         print('init slackserver')
 
     def send_check_box(self):
-        result = client.chat_postMessage(channel='#test', text="Recommendations", blocks=recommendations)
+        result = client.chat_postMessage(
+            channel='#test', text="Recommendations", blocks=recommendations)
 
     @slack_event_adapter.on('app_mention')
     def app_mention(payload):
@@ -47,6 +52,8 @@ class SlackServer(object):
         channel_id = event.get('channel')
         user_id = event.get('user')
         text = event.get('text')
+
+        print(' ok?')
 
         if(BOT_ID != user_id):
             if('timer' in text):
@@ -61,6 +68,3 @@ class SlackServer(object):
                 client.chat_postMessage(channel='#test', text=response)
             else:
                 print('nothng')
-
-
-
