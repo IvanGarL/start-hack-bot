@@ -11,6 +11,8 @@ import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from slack_sdk.web import SlackResponse
+import time
+import re
 
 app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(
@@ -18,16 +20,34 @@ slack_event_adapter = SlackEventAdapter(
 
 client = WebClient(token=os.environ['SLACK_OAUTH_ACCESS_TOKEN'])
 # client.chat_postMessage(channel='#test', text="Hello world!")
+BOT_ID = client.api_call("auth.test")['user_id']
+
 
 @slack_event_adapter.on('message')
 def message(payload):
-    print('test?')
     event = payload.get('event', {})
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
+    times_up = True
 
-    client.chat_postMessage(channel='#test', text=text)
+    if(BOT_ID != user_id):
+        if('timer' in text):
+            response = 'how long?'
+            client.chat_postMessage(channel='#test', text=response)
+        elif('seconds' in text and times_up):
+            times_up = False
+            print('text: ', text)
+            response = 'The timer started!'
+            time_in_s =  [int(s) for s in re.findall(r'\b\d+\b', text)][0]
+
+            client.chat_postMessage(channel='#test', text=response)
+            # time.sleep(time_in_s)
+            response = 'Time is up!'
+            client.chat_postMessage(channel='#test', text=response)
+        else:
+            text = ''
+
 
 
 # ---------------------------- #
