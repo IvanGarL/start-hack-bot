@@ -1,33 +1,45 @@
+
+start_text = "Welcome to HomeFocus :wave: Ready to get focused? Simply choose a feature " + \
+				"that might help you focus. :raised_hands:"
+
 recommendations = [
 		{
 			"type": "section",
 			"text": {
 				"type": "plain_text",
-				"text": "Check out these charming checkboxes"
+				"text": start_text
 			},
+
 			"accessory": {
 				"type": "checkboxes",
 				"action_id": "this_is_an_action_id",
-				"initial_options": [{
-					"value": "A1",
-					"text": {
-						"type": "plain_text",
-						"text": "Checkbox 1"
-					}
-				}],
 				"options": [
 					{
-						"value": "A1",
+						"value": "v_music",
 						"text": {
 							"type": "plain_text",
-							"text": "Checkbox 1"
+							"text": "Play Focus Music"
 						}
 					},
 					{
-						"value": "A2",
+						"value": "v_desk_sounds",
 						"text": {
 							"type": "plain_text",
-							"text": "Checkbox 2"
+							"text": "Play Desk Sounds"
+						}
+					},
+					{
+						"value": "v_todo",
+						"text": {
+							"type": "plain_text",
+							"text": "Create a To-Do list!"
+						}
+					},
+					{
+						"value": "v_working_companion",
+						"text": {
+							"type": "plain_text",
+							"text": "Have a working companion!"
 						}
 					}
 				]
