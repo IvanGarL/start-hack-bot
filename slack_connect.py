@@ -1,4 +1,5 @@
 import os
+import json
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -32,3 +33,27 @@ class SlackClient(object):
         user = self.client.api_call(api_method='users.lookupByEmail', params={"email": email})
         if user.data.get('ok'):
             return user.data.get('user')
+
+    def receive_message(self):
+        # ID of channel that the message exists in
+        conversation_id = "U01RXVA197U"
+
+        try:
+            print(self.client.conversations_history)
+            # Call the conversations.history method using the WebClient
+            # The client passes the token you included in initialization    
+            result = self.client.conversations_history(
+                channel=conversation_id,
+                inclusive=True,
+                oldest="1610144875.000600",
+                limit=1
+            )
+
+            message = result["messages"][0]
+            # Print message text
+            print(message["text"])
+
+        except SlackApiError as e:
+            print(f"Error: {e}")
+
+            
