@@ -2,16 +2,26 @@
 start_text = "Welcome to HomeFocus :wave: Ready to get focused? Simply choose a feature " + \
     "that might help you focus. :raised_hands:"
 
-recommendation_buttons = {
-    "type": "button",
-    "text": {
+recommendation_buttons = [
+    {
+      "type": "button",
+      "text": {
+        "type": "plain_text",
+        "text": "To-Do"
+      },
+      "value": "v_todo",
+      "action_id": "v_todo"
+    },
+	{
+      "type": "button",
+      "text": {
         "type": "plain_text",
         "text": "Play Focus Music"
-    },
-    "style": "primary",
-    "value": "v_music",
-    "action_id": "button"
-}
+      },
+      "value": "v_music",
+      "action_id": "v_music"
+    }
+  ]
 
 recommendations = [
     {
@@ -22,19 +32,19 @@ recommendations = [
       "type": "button",
       "text": {
         "type": "plain_text",
-        "text": "A"
+        "text": "To-Do"
       },
-      "value": "A",
-      "action_id": "A"
+      "value": "v_todo",
+      "action_id": "v_todo"
     },
 	{
       "type": "button",
       "text": {
         "type": "plain_text",
-        "text": "B"
+        "text": "Play Focus Music"
       },
-      "value": "B",
-      "action_id": "B"
+      "value": "v_music",
+      "action_id": "v_music"
     }
   ]
 }

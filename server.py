@@ -26,7 +26,6 @@ client_preferences = ClientPreferences()
 def login():
     error = None
     if request.method == 'POST':
-        print(request.values)
         client_preferences.update_recommendations_options(
             request.form['payload'])
     if request.method == 'GET':
