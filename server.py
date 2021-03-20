@@ -1,8 +1,8 @@
 # ---------------------------- #
 #           server             #
 # ---------------------------- #
-
-from flask import Flask
+import json
+from flask import Flask, request
 from slackeventsapi import SlackEventAdapter
 import os
 from slack_sdk import WebClient
@@ -19,13 +19,24 @@ slack_event_adapter = SlackEventAdapter(
 client = WebClient(token=os.environ['SLACK_OAUTH_ACCESS_TOKEN'])
 BOT_ID = client.api_call("auth.test")['user_id']
 
+@app.route('/slack/interactions', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        print(request.data)
+        print(request.values)
+    return  ('', 204)
+
 class SlackServer(object):
     def __init__(self, token=None):
         print('init slackserver')
 
     def send_check_box(self):
         result = client.chat_postMessage(channel='#test', text="Recommendations", blocks=recommendations)
-        print(result)
+
+    @slack_event_adapter.on('app_mention')
+    def app_mention(payload):
+        print('ok')
 
     @slack_event_adapter.on('message')
     def message(payload):
@@ -38,7 +49,7 @@ class SlackServer(object):
             if('timer' in text):
                 response = 'how long?'
                 client.chat_postMessage(channel='#test', text=response)
-            elif('seconds' in text and times_up):
+            elif('seconds' in text):
                 times_up = False
                 print('text: ', text)
                 response = 'The timer startded!'
