@@ -33,8 +33,3 @@ class SlackClient(object):
         user = self.client.api_call(api_method='users.lookupByEmail', params={"email": email})
         if user.data.get('ok'):
             return user.data.get('user')
-
-    def receive_message(self):
-        print('test')
-
-            
