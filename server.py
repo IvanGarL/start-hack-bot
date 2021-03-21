@@ -19,36 +19,30 @@ from client_preferences import ClientPreferences
 client = WebClient(token=os.environ['SLACK_OAUTH_ACCESS_TOKEN'])
 BOT_ID = client.api_call("auth.test")['user_id']
 client_preferences = ClientPreferences()
-
-
-@app.route('/slack/interactions', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        try:
-            btn_id = client_preferences.update_recommendations_options(
-                request.form['payload'])
-            if(btn_id == 'v_deep_focus'):
-                print('btn change')
-        except Exception as e:
-            return ('', 204)
-    if request.method == 'GET':
-        print('GET')
-    return ('', 204)
-    
-
 class SlackServer(object):
     app = Flask(__name__)
     slack_event_adapter = SlackEventAdapter(
         Config.SIGNIN_SECRET, '/slack/events', app)
 
+    def __init__(self, token=None):
+        print('init slackserver')
+
     @app.route('/interactive', methods=['POST'])
     def interactive():
         payload = json.loads(request.form["payload"])
         user_id = payload['user']['id']
-        if(BOT_ID != user_id):
+        print(payload)
+        if(BOT_ID != user_id and False):
             client.chat_postMessage(channel=user_id,
                                     text="hola")
+        elif(BOT_ID != user_id and payload['type'] == 'block_actions'):
+            try:
+                btn_id = client_preferences.update_recommendations_options(
+                    request.form['payload'])
+                if(btn_id == 'v_deep_focus'):
+                    print('btn change')
+            except Exception as e:
+                return ('', 204)
         return Response()
 
     @app.route('/slashcommand', methods=['GET', 'POST'])
@@ -56,9 +50,6 @@ class SlackServer(object):
         print(request.form["trigger_id"])
         client.views_open(trigger_id=request.form["trigger_id"], view=json.dumps(data_jsons.todo_modal))
         return Response()
-    
-    def __init__(self, token=None):
-        print('init slackserver')
 
     def send_check_box(self):
         result = client.chat_postMessage(channel='#test', text="Recommendations", blocks=data_jsons.recommendations)
