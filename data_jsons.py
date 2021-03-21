@@ -1,6 +1,9 @@
 
 start_text = "Welcome to *HomeFocus* :wave: Ready to get *focused*? Simply choose a feature " + \
-    "that might help you *focus*. :raised_hands:"
+    "that might help you *focus*. :raised_hands: \n\n"
+
+end_text = "If you have any questions, check out the Frequently Asked Questions or email us at Focus@Home"
+		
 
 
 recommendation_buttons = [{
@@ -87,12 +90,20 @@ divider = [{
   "type": "divider"
 }]
 
-recommendations = [
-    {
+start = [{
         "type": "section",
         "text": {
                 "type": "mrkdwn",
                 "text": start_text
         },
-    },
-] + divider + recommendation_buttons
+    },]
+
+end = [{
+        "type": "section",
+        "text": {
+                "type": "mrkdwn",
+                "text": end_text
+        },
+    },]
+
+recommendations = start + divider + recommendation_buttons + divider+ end
