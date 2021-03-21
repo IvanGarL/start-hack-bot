@@ -26,8 +26,10 @@ client_preferences = ClientPreferences()
 def login():
     error = None
     if request.method == 'POST':
-        client_preferences.update_recommendations_options(
+        btn_id = client_preferences.update_recommendations_options(
             request.form['payload'])
+        if(btn_id == 'v_deep_focus'):
+            print('btn change')
     if request.method == 'GET':
         print('GET')
     return ('', 204)
@@ -39,11 +41,7 @@ class SlackServer(object):
 
     def send_check_box(self):
         result = client.chat_postMessage(
-            channel='#test', text="Let's Focus!", blocks=recommendations)
-
-    @slack_event_adapter.on('app_mention')
-    def app_mention(payload):
-        print('ok')
+            channel='#test', text="Let's Focus! :eyes:", blocks=recommendations)
 
     @slack_event_adapter.on('message')
     def message(payload):

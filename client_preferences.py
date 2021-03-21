@@ -11,8 +11,8 @@ class ClientPreferences(object):
     def __init__(self):
         print('initing ClientPreferences')
         self.checkvalues = {}
-        # for element in recommendation_buttons:
-        #     self.checkvalues[element['value']] = False
+        for element in recommendation_buttons:
+            self.checkvalues[element['accessory']['value']] = False
         
 
     def update_recommendations_options(self, data):
@@ -21,10 +21,13 @@ class ClientPreferences(object):
             data_id = data['actions'][0]['action_id']
 
             self.checkvalues[data_id] = not(self.checkvalues[data_id])
+            return data_id
 
         except SlackApiError as e:
             # You will get a SlackApiError if "ok" is False
             print(f"Got an error: {e.response['error']}")
+
+            
 
     def get_client_preference(self):
         return self.checkvalues
