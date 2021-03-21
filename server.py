@@ -26,10 +26,13 @@ client_preferences = ClientPreferences()
 def login():
     error = None
     if request.method == 'POST':
-        btn_id = client_preferences.update_recommendations_options(
-            request.form['payload'])
-        if(btn_id == 'v_deep_focus'):
-            print('btn change')
+        try:
+            btn_id = client_preferences.update_recommendations_options(
+                request.form['payload'])
+            if(btn_id == 'v_deep_focus'):
+                print('btn change')
+        except Exception as e:
+            return ('', 204)
     if request.method == 'GET':
         print('GET')
     return ('', 204)
