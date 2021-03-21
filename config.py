@@ -11,4 +11,4 @@ class Config:
 
     # General Config
     SLACK_OAUTH_ACCESS_TOKEN = environ.get('SLACK_OAUTH_ACCESS_TOKEN')
-    
+    SIGNIN_SECRET = environ.get('SIGNIN_SECRET')

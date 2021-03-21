@@ -46,3 +46,37 @@ recommendations = [
 			}
 		}
 	]
+
+todo_modal = {
+	"type": "modal",
+	"title": {
+		"type": "plain_text",
+		"text": "Create a task :scroll:",
+		"emoji": True
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit",
+		"emoji": True
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel",
+		"emoji": True
+	},
+	"blocks": [
+		{
+			"type": "input",
+			"block_id": "my_block",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "my_action"
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "what task do you want to add?",
+				"emoji": True
+			}
+		}
+	]
+}
