@@ -35,7 +35,7 @@ class SlackServer(object):
         if(BOT_ID != user_id and payload['type'] == 'view_submission'):
             task = payload['view']['state']['values']['my_block']['my_action']['value']
             todolist_update =  tasksbuffer.addTask(task)
-            client.chat_postMessage(channel="#todo-list", text=todolist_update)
+            client.chat_postMessage(channel="#home-office", text=todolist_update)
         elif(BOT_ID != user_id and payload['type'] == 'block_actions'):
             try:
                 btn_id = client_preferences.update_recommendations_options(
@@ -53,7 +53,7 @@ class SlackServer(object):
         return Response()
 
     def send_check_box(self):
-        result = client.chat_postMessage(channel='#test', text="Recommendations", blocks=data_jsons.recommendations)
+        result = client.chat_postMessage(channel='#home-office', text="Recommendations", blocks=data_jsons.recommendations)
 
     @slack_event_adapter.on('message')
     def message(payload):
@@ -68,13 +68,13 @@ class SlackServer(object):
             times_up = True
             if('timer' in text):
                 response = 'how long?'
-                client.chat_postMessage(channel='#test', text=response)
-            elif('seconds' in text):
+                client.chat_postMessage(channel='#home-office', text=response)
+            elif('minutes' in text):
                 times_up = False
                 print('text: ', text)
                 response = 'The timer started!'
                 time_in_s = [int(s) for s in re.findall(r'\b\d+\b', text)][0]
 
-                client.chat_postMessage(channel='#test', text=response)
+                client.chat_postMessage(channel='#home-office', text=response)
             else:
                 print('nothng')
