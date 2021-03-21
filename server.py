@@ -31,8 +31,8 @@ class SlackServer(object):
     def interactive():
         payload = json.loads(request.form["payload"])
         user_id = payload['user']['id']
-        print(payload)
-        if(BOT_ID != user_id and False):
+        print(payload['type'])
+        if(BOT_ID != user_id and payload['type'] != 'block_actions'):
             client.chat_postMessage(channel=user_id,
                                     text="hola")
         elif(BOT_ID != user_id and payload['type'] == 'block_actions'):
