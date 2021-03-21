@@ -11,8 +11,8 @@ class ClientPreferences(object):
     def __init__(self):
         print('initing ClientPreferences')
         self.checkvalues = {}
-        for element in recommendation_buttons:
-            self.checkvalues[element['value']] = False
+        # for element in recommendation_buttons:
+        #     self.checkvalues[element['value']] = False
         
 
     def update_recommendations_options(self, data):
