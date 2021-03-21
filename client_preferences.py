@@ -18,6 +18,7 @@ class ClientPreferences(object):
     def update_recommendations_options(self, data):
         try:
             data = json.loads(data)
+            print(data['type'] == 'block_actions')
             data_id = data['actions'][0]['action_id']
 
             self.checkvalues[data_id] = not(self.checkvalues[data_id])

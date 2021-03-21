@@ -11,6 +11,7 @@ from slack_sdk.web import SlackResponse
 import time
 import re
 from data_jsons import recommendations, recommendation_buttons
+from layout_jsons import home_blocks, home_view
 from client_preferences import ClientPreferences
 
 app = Flask(__name__)
@@ -48,6 +49,12 @@ class SlackServer(object):
         result = client.chat_postMessage(
             channel='#test', text="Let's Focus! :eyes:", blocks=recommendations)
 
+    
+    async def updateView(user):
+        blocks = home_blocks
+        view = home_view
+        return json.dumps(view)
+
     @slack_event_adapter.on('app_home_opened')
     async def app_home_opened(payload):
         print('app_home_opened')
@@ -81,3 +88,5 @@ class SlackServer(object):
                 client.chat_postMessage(channel='#test', text=response)
             else:
                 print('nothng')
+
+    
