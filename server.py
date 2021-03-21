@@ -12,10 +12,30 @@ import re
 import data_jsons
 from config import Config
 import json
+#from data_jsons import recommendations, recommendation_buttons
+from client_preferences import ClientPreferences
 
 
 client = WebClient(token=os.environ['SLACK_OAUTH_ACCESS_TOKEN'])
 BOT_ID = client.api_call("auth.test")['user_id']
+client_preferences = ClientPreferences()
+
+
+@app.route('/slack/interactions', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        try:
+            btn_id = client_preferences.update_recommendations_options(
+                request.form['payload'])
+            if(btn_id == 'v_deep_focus'):
+                print('btn change')
+        except Exception as e:
+            return ('', 204)
+    if request.method == 'GET':
+        print('GET')
+    return ('', 204)
+    
 
 class SlackServer(object):
     app = Flask(__name__)
@@ -50,12 +70,14 @@ class SlackServer(object):
         user_id = event.get('user')
         text = event.get('text')
 
+        print(' ok?')
+
         if(BOT_ID != user_id):
             times_up = True
             if('timer' in text):
                 response = 'how long?'
                 client.chat_postMessage(channel='#test', text=response)
-            elif('seconds' in text and times_up):
+            elif('seconds' in text):
                 times_up = False
                 print('text: ', text)
                 response = 'The timer started!'
@@ -64,7 +86,3 @@ class SlackServer(object):
                 client.chat_postMessage(channel='#test', text=response)
             else:
                 print('nothng')
-
-
-
-
