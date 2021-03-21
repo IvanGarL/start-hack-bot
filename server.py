@@ -36,6 +36,8 @@ def login():
     if request.method == 'GET':
         print('GET')
     return ('', 204)
+
+    
     
 
 class SlackServer(object):
@@ -46,6 +48,17 @@ class SlackServer(object):
         result = client.chat_postMessage(
             channel='#test', text="Let's Focus! :eyes:", blocks=recommendations)
 
+    @slack_event_adapter.on('app_home_opened')
+    async def app_home_opened(payload):
+        print('app_home_opened')
+        args = {
+            token: process.env.SLACK_BOT_TOKEN,
+            user_id: user,
+            view: await updateView(user)
+        }
+        result = await axios.post('/views.publish', qs.stringify(args))
+
+        
     @slack_event_adapter.on('message')
     def message(payload):
         event = payload.get('event', {})
