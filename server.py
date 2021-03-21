@@ -42,6 +42,8 @@ class SlackServer(object):
                     request.form['payload'])
                 if(btn_id == 'v_deep_focus'):
                     print('btn change')
+                    client.chat_postMessage(channel='#home-office', text="Hi! :wave: Please remove your phone from the room, since it can distract you from working.")
+                    client.chat_postMessage(channel='#home-office', text="It is recommended to start a timer to focus even more: just type 'timer' ")
             except Exception as e:
                 return ('', 204)
         return Response()
