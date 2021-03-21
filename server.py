@@ -12,13 +12,14 @@ import re
 import data_jsons
 from config import Config
 import json
-#from data_jsons import recommendations, recommendation_buttons
 from client_preferences import ClientPreferences
+from tasksbuffer import TaskBuffer
 
 
 client = WebClient(token=os.environ['SLACK_OAUTH_ACCESS_TOKEN'])
 BOT_ID = client.api_call("auth.test")['user_id']
 client_preferences = ClientPreferences()
+tasksbuffer = TaskBuffer()
 class SlackServer(object):
     app = Flask(__name__)
     slack_event_adapter = SlackEventAdapter(
@@ -31,10 +32,11 @@ class SlackServer(object):
     def interactive():
         payload = json.loads(request.form["payload"])
         user_id = payload['user']['id']
-        print(payload)
-        if(BOT_ID != user_id and False):
-            client.chat_postMessage(channel=user_id,
-                                    text="hola")
+        
+        if(BOT_ID != user_id and payload['type'] == 'view_submission'):
+            task = payload['view']['state']['values']['my_block']['my_action']['value']
+            todolist_update =  tasksbuffer.addTask(task)
+            client.chat_postMessage(channel="#todo-list", text=todolist_update)
         elif(BOT_ID != user_id and payload['type'] == 'block_actions'):
             try:
                 btn_id = client_preferences.update_recommendations_options(

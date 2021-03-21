@@ -5,3 +5,11 @@ class TaskBuffer(object):
 
     def __init__(self):
         self.tasks = []
+
+    def addTask(self, task):
+        self.tasks.append(task)
+        mssg = self.list_updated + "\n"
+        for task in self.tasks:
+            mssg+=":heavy_check_mark:" + task + "\n"
+        
+        return mssg
