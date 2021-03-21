@@ -22,7 +22,7 @@ client_preferences = ClientPreferences()
 class SlackServer(object):
     app = Flask(__name__)
     slack_event_adapter = SlackEventAdapter(
-        Config.SIGNIN_SECRET, '/slack/events', app)
+        Config.SIGNING_SECRET, '/slack/events', app)
 
     def __init__(self, token=None):
         print('init slackserver')
