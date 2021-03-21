@@ -1,12 +1,16 @@
 
-start_text = "Welcome to HomeFocus :wave: Ready to get focused? Simply choose a feature " + \
-    "that might help you focus. :raised_hands:"
+start_text = "Welcome to *HomeFocus* :wave: Ready to get *focused*? Simply choose a feature " + \
+    "that might help you *focus*. :raised_hands:"
+
 
 recommendation_buttons = [{
     "type": "section",
     "text": {
             "type": "mrkdwn",
-        "text": "Create a To-Do-List!"
+        "text": "1. To-Do Lists Create Order \n"+\
+			"2. To-Do Lists Help You Create Accountability\n" +\
+				"3. To-Do Lists Help Relieve Your Stress\n" +\
+					"4. You get the point :wink:"
     },
     "accessory": {
         "type": "button",
@@ -21,7 +25,7 @@ recommendation_buttons = [{
     "type": "section",
     "text": {
             "type": "mrkdwn",
-            "text": "Create a To-Do-List!"
+            "text": "The timer can provide motivation as the employee can try to “beat” the clock. Some employees respond better to an object setting boundaries than an adult telling them what to do."
     },
     "accessory": {
         "type": "button",
@@ -36,7 +40,7 @@ recommendation_buttons = [{
     "type": "section",
     "text": {
             "type": "mrkdwn",
-            "text": "Create a To-Do-List!"
+            "text": "It reduces distractions and improves focus. Music helps boost motivation when starting a new task. It is beneficial to listen to something you are familiar with for focusing intensely on your project. Researchers recommend listening to instrumental music if you want to hear music while working."
     },
     "accessory": {
         "type": "button",
@@ -51,7 +55,7 @@ recommendation_buttons = [{
     "type": "section",
     "text": {
             "type": "mrkdwn",
-            "text": "Create a To-Do-List!"
+            "text": "Want to feel like you are just at your work?"
     },
     "accessory": {
         "type": "button",
@@ -66,7 +70,7 @@ recommendation_buttons = [{
     "type": "section",
     "text": {
             "type": "mrkdwn",
-            "text": "Create a To-Do-List!"
+            "text": "keep each other company and keep yourselves accountable while you work."
     },
     "accessory": {
         "type": "button",
@@ -79,6 +83,10 @@ recommendation_buttons = [{
     },
 }, ]
 
+divider = [{
+  "type": "divider"
+}]
+
 recommendations = [
     {
         "type": "section",
@@ -87,4 +95,4 @@ recommendations = [
                 "text": start_text
         },
     },
-] + recommendation_buttons
+] + divider + recommendation_buttons
