@@ -39,7 +39,7 @@ class SlackServer(object):
 
     def send_check_box(self):
         result = client.chat_postMessage(
-            channel='#test', text="Recommendations", blocks=recommendations)
+            channel='#test', text="Let's Focus!", blocks=recommendations)
 
     @slack_event_adapter.on('app_mention')
     def app_mention(payload):
