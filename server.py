@@ -23,7 +23,7 @@ tasksbuffer = TaskBuffer()
 class SlackServer(object):
     app = Flask(__name__)
     slack_event_adapter = SlackEventAdapter(
-        Config.SIGNIN_SECRET, '/slack/events', app)
+        Config.SIGNING_SECRET, '/slack/events', app)
 
     def __init__(self, token=None):
         print('init slackserver')
@@ -32,7 +32,6 @@ class SlackServer(object):
     def interactive():
         payload = json.loads(request.form["payload"])
         user_id = payload['user']['id']
-        
         if(BOT_ID != user_id and payload['type'] == 'view_submission'):
             task = payload['view']['state']['values']['my_block']['my_action']['value']
             todolist_update =  tasksbuffer.addTask(task)
